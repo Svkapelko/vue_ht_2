@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Задание 4
+Вы разрабатываете приложение для отображения и сортировки списка товаров. У вас есть массив объектов products, где каждый объект представляет товар с его названием и ценой. Вам необходимо отобразить список товаров и предоставить пользователю возможность сортировать товары по цене (по возрастанию и по убыванию). -->
+     
+    <div id="app">
+        <h2>Product list</h2>        
+        <input type='checkbox' @change="sortPrice" v-model="sortAsc">
+        <label for='sortAsc'>Sort by price</label>
+        <p v-for="(product, index) of products" :key="index">{{ product.name }} - {{product.price}}</p>
+    </div>
+                  
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        const app = createApp({
+            data() {
+                return {
+                    sortAsc: false,
+                    products: [
+                        {
+                            id: 0,
+                            name: 'table',
+                            price: 800 ,                           
+                        },
+                        {
+                            id: 1,
+                            name: 'chair',
+                            price: 200 ,   
+                        },
+                        {
+                            id: 2,
+                            name: 'bed',
+                            price: 900,   
+                        },
+                    ],   
+                }
+            },           
+            methods: {
+                sortPrice() {
+                    this.products.sort((a,b) => {
+                        if (this.sortAsc) {
+                            return a.price - b.price;
+                        } else {
+                            return b.price - a.price;
+                        };                      
+                    });
+                },               
+            },  
+        });
+        app.mount('#app');
+    </script>
+
+</body>
+
+</html>

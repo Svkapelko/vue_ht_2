@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Задание 4
+Вы разрабатываете приложение для отображения и сортировки списка товаров. У вас есть массив объектов products, где каждый объект представляет товар с его названием и ценой. Вам необходимо отобразить список товаров и предоставить пользователю возможность сортировать товары по цене (по возрастанию и по убыванию). -->
+     
+    <div id="app">
+        <h2>Product list</h2>     
+            <ul class="products">  
+                <li class="product" v-for="product in sortedProducts" :key="product.id">
+                   <!-- <span>ID: {{ product.id }}.</span> -->
+                    <span> {{ product.name }} -  {{ product.price }}  </span> 
+                     
+                </li>                           
+            </ul>     
+            <button @click="toggleSortDirection">Sort</button>         
+    </div> 
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        const app = createApp({
+            data() {
+                return {
+                    sortDirection: 'asc',
+                    products: [
+                        {
+                            id: 0,
+                            name: 'table',
+                            price: 800 ,                           
+                        },
+                        {
+                            id: 1,
+                            name: 'chair',
+                            price: 200 ,   
+                        },
+                        {
+                            id: 2,
+                            name: 'bed',
+                            price: 900,   
+                        },
+                    ],   
+                }
+            },           
+            computed: {
+                sortedProducts() { 
+                    if (this.sortDirection === 'desc') {
+                        return this.products.slice().sort((a,b) => a.price - b.price);  
+                    } else {
+                        return this.products.slice().sort((a,b) => (a.price - b.price)).reverse(); 
+                    }                  
+                }                
+            },
+           methods: {
+                toggleSortDirection() {
+                    this.sortDirection = this.sortDirection === 'asc'? 'desc' : 'asc';
+                }
+            }   
+        });
+        app.mount('#app');
+    </script>
+
+</body>
+
+</html>
